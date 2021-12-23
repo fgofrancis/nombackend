@@ -1,0 +1,136 @@
+{
+  "empleados": [
+    {
+      "id": 1,
+      "idenfificacion": "00111772687",
+      "Nombre1": "Francis",
+      "Nombre2": "Edwar",
+      "Apellido1": "Figuereo",
+      "Apellido2": "Solís",
+      "FecIngreso": "01/11/2021",
+      "FecSalida": "",
+      "SueldoMensual": 120000
+    },
+    {
+      "id": 2,
+      "Idenfificacion": "001008263005",
+      "Nombre1": "Ybis",
+      "Nombre2": "Belkys",
+      "Apellido1": "Segura",
+      "Apellido2": "Peréz",
+      "FecIngreso": "07/11/2021",
+      "FecSalida": "",
+      "SueldoMensual": 120000
+    },
+    {
+      "Idenfificacion": "001008263005",
+      "Nombre1": "Rose",
+      "Nombre2": "Mery",
+      "Apellido1": "Segura",
+      "Apellido2": "Peréz",
+      "FecIngreso": "07/11/2021",
+      "FecSalida": "",
+      "SueldoMensual": 120000,
+      "id": 3
+    }
+  ],
+  "escalaSalarial": [
+    {
+
+    "year": 2021,
+     "escalas": 
+        {
+         "escala": 1,
+         "limiteInf": 0,
+         "limiteSup": 416220,
+         "Tasa": 0,
+         "constante": 0
+     }
+    }
+  ],
+  "tasasglobales": [
+    {
+      "year": 2021,
+      "sminpromedio": 13482,
+      "sfs": 3.04,
+      "svds": 0.03
+    }
+  ],
+
+"asignaciones":[
+  {
+  "IdEmpleado":"",
+   
+  "SalarioCotizableTSS":
+   {
+     "sueldo": 1000.00,
+     "comisiones": 2000.00,
+     "vacaciones": 3000.00,
+     "total": 0
+   },
+
+    "OtrasRemuneraciones":
+   {
+     "horasExtraDiasFeriados":1000.00,
+     "otrosIngresos": 2000.00,
+     "bonosTrimestrales": 3000.00,
+     "total": 0
+   },
+
+   "IngresosExentoISR":
+   {
+     "RegaliaPascual": 1000.00,
+     "IndemnizacionesLaborales": 2000.00,
+     "PreavisoYCesantia": 3000.00,
+     "total": 0
+   },
+   
+   "Otros":
+    {
+     "Reembolsos":1000.00,
+     "total":2000.00 
+    }
+  }
+],
+
+
+    "deducciones":[
+        {
+         "IdEmpleado":"",
+         "retencionesLey":
+            {
+	     "SFS":100 ,
+             "AFP":100 ,
+             "DependienteAdicTSS":100 ,
+             "ISR":100 ,
+             "total":100
+            },
+         "otrasDeducciones":
+            {
+	      "CxCempleado":100,
+              "OtrosDescuentos":100,
+              "total":100
+            }
+        }    
+    ],
+
+  "constribucionesLey":[
+      { 
+        "IdEmpleado":"",
+        "SFSretencion":100.00,
+        "SFSconstribucion":100.00,
+        "AFPretencion":100.00,
+        "AFPconstribucion":100.00,
+        "SRLconstribucion":100.00,
+        "INFOTEPconstribucion":100.00,
+        "Total":100.00
+      }
+  ],
+
+  "generadorNomina":
+     {
+         "asignaciones":100,
+          "deducciones":100,
+          "netoapagar":100
+     }
+}
