@@ -1,6 +1,6 @@
 # Sistema de Nómina - Backend
 
-Recuerden ejecuar 
+Recuerda ejecutar 
 ```
 npm install
 ```

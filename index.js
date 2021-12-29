@@ -13,16 +13,17 @@ const { dbConnection } =require('./database/config');
 // hacia abajo
 app.use(cors() );
 
+// Lectura y parseo del body
+app.use( express.json() );
+
+
 dbConnection();
 
 //Rutas
-app.get('/', (req, res)=>{
+app.use('/api/usuarios', require('./routes/usuarios-routes'));
+app.use('/api/login', require('./routes/auth-routes'));
 
-    res.status(400).json({
-        ok:true,
-        msg:'Hola Mundo'
-    })
-});
+
 
 app.listen( process.env.PORT, ()=>{
     console.log('Servidor corriendo en el puerto ' + process.env.PORT);
