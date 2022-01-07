@@ -17,7 +17,7 @@ const validarJWT = (req, res=response, next )=>{
     // Validar token existente
     try {
         const {uid, email } = jwt.verify(token, process.env.JWT_SECRET);
-        console.log(uid, email);
+     
         // La req ahora tiene un nuevo elemento y es el uid del token
         req.uid = uid,
         req.address = email

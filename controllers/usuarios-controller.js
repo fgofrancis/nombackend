@@ -5,11 +5,25 @@ const { generarJWT } = require('../helpers/jwt');
 
 const getUsuarios = async(req, res)=>{
 
-    const usuarios = await Usuario.find({}, 'name email role google');
+    const desde = Number(req.query.desde) || 0;
+
+    // const usuarios = await Usuario.find({}, 'name email role google')
+    //                               .skip(desde)
+    //                               .limit( 5);
+    // const total = await Usuario.count();
+
+    const [usuarios, total] = await Promise.all([
+        Usuario.find({}, 'name email role google img')
+               .skip(desde)
+               .limit( 5),
+
+        Usuario.countDocuments()         
+    ]);
  
     res.json({
         ok:true,
-        usuarios
+        usuarios,
+        total
         // uid:req.uid, esto es para demostrar como capturar el usuario logeado
         // correo:req.address
     })
