@@ -16,8 +16,11 @@ app.use(cors() );
 // Lectura y parseo del body
 app.use( express.json() );
 
-
+// Base de datos
 dbConnection();
+
+// Directorio público
+app.use( express.static('public') );
 
 //Rutas
 app.use('/api/usuarios', require('./routes/usuarios-routes'));
@@ -26,6 +29,7 @@ app.use('/api/asignaciones', require('./routes/asignacion-routes'));
 app.use('/api/todo', require('./routes/busquedas-routes'));
 app.use('/api/uploads', require('./routes/uploads-routes'));
 app.use('/api/login', require('./routes/auth-routes'));
+app.use('/api/login/google', require('./routes/auth-routes'));
 
 
 
