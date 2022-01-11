@@ -29,7 +29,11 @@ router.post('/',
     crearEmpleado);
 
 router.put('/:id',
-    [],
+    [
+        validarJWT,
+        check('name1', 'El primer nombre es requerido').not().isEmpty(),
+        validarCampos
+    ],
     actualizarEmpleado);
 
 

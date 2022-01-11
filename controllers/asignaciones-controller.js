@@ -42,19 +42,67 @@ const crearAsignacion = async(req, res=response )=>{
 
 }
 
-const actualizarAsignacion = (req, res=response)=>{
+const actualizarAsignacion = async(req, res=response)=>{
+    const id = req.params.id;
+    const uid = req.uid;
 
-    res.json({
-        ok:true,
-        msg:'actualizarAsignacion'
-    })
+    try {
+        
+        const asignacion = await Asignacion.findById(id);
+
+        if(!asignacion){
+            return res.status(404).json({
+                ok:false,
+                msg:'Asignacion no encontrada por Id'
+            });
+        };
+
+        // Actualizar empleados
+        const cambiosAsignacion = {
+            ...req.body,
+            usuario:uid
+        };
+
+        asignacionActualizada = await Asignacion.findByIdAndUpdate( id, cambiosAsignacion, {new:true} );
+        res.json({
+            ok:true,
+            Asignación: asignacionActualizada
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok:false,
+            msg:'Hable con el Administrador'
+        })
+    }
 }
-const borrarAsignacion = (req, res= response)=>{
+const borrarAsignacion = async(req, res= response)=>{
 
-    res.json({
-        ok: true,
-        msg:'borrarAsignacion'
-    })
+    const id = req.params.id;
+
+    try {
+        
+        const asignacion = await Asignacion.findById(id);
+
+        if(!asignacion){
+            return res.status(404).json({
+                ok:false,
+                msg:'Asignación no encontrada por Id'
+            });
+        };
+        await Asignacion.findByIdAndDelete(id);
+
+        res.json({
+            ok:true,
+            msg: 'Asignación Eliminada'
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok:false,
+            msg:'Hable con el Administrador'
+        })
+    }
 }
 
 module.exports = {

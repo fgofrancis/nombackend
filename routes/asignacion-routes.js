@@ -25,7 +25,13 @@ route.post('/',
         validarCampos
     ],
      crearAsignacion);
-route.put('/:id', actualizarAsignacion);
+     
+route.put('/:id', 
+    [
+        validarJWT
+    ],
+    actualizarAsignacion);
+
 route.delete('/:id',borrarAsignacion);
 
 
