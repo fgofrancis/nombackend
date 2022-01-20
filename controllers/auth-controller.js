@@ -17,7 +17,7 @@ const login = async(req, res=response) =>{
                 msg:'Datos de Login no válido'
             })
         }
-
+ 
         // Verificar contraseña
         const validPassword = bcryptjs.compareSync(password, usuarioDB.password);
         if(!validPassword){
@@ -28,7 +28,7 @@ const login = async(req, res=response) =>{
         };
 
         // Generar el Token - JWT
-        const token = await generarJWT(usuarioDB.id, usuarioDB.email);
+        const token = await generarJWT(usuarioDB.id, usuarioDB.email, usuarioDB.companiaID);
 
         res.json({
             ok:true,
@@ -63,7 +63,8 @@ const googleSignIn = async(req, res=response )=>{
                 email,
                 password: '@@@',
                 img: picture,
-                google: true
+                google: true,
+                companiaID: '61e050f884eb7bd8ad11d585'
             });
         }else{
             // Existe el usuario
@@ -75,7 +76,7 @@ const googleSignIn = async(req, res=response )=>{
         await usuario.save();
 
         // Generar el JWT
-        const token = await generarJWT(usuario.id, usuario.email);
+        const token = await generarJWT(usuario.id, usuario.email,usuario.companiaID);
 
         res.json({
             ok:true,
@@ -87,21 +88,36 @@ const googleSignIn = async(req, res=response )=>{
         
         res.json({
             ok:false,
-            msg:'Token no es correcto',
+            msg:'Token Google no es correcto',
         });
     }
 };
 
 const renewToken = async(req, res= response )=>{
 
-    const uid = req.uid;
+    // const uid = req.uid;
+    // const email = req.email
+    // const companiaID = req.companiaID
+
+    const { uid, email, companiaID } = req;
     
-    // Generar el JWT
-    const token = await generarJWT(uid);
+    // Generar el TOKEN - JWT
+    const token = await generarJWT(uid, email, companiaID);
+
+    //Obtener el usuarioDB por UID
+    const usuarioDB = await Usuario.findById(uid);
+
+    if(!usuarioDB){
+        return res.json({
+            ok: false,
+            msg:'Usuario no existe por ese UID'
+        });
+    }
 
     res.json({
         ok:true,
-        token
+        token,
+        usuarioDB
     });
 }
 

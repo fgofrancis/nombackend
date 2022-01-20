@@ -12,6 +12,7 @@
  const route= Router();
 
  route.use( expressfileUpload() );
+ 
  route.put('/:tipo/:id', validarJWT,fileUpload)
  route.get('/:tipo/:foto', retornaImag)
   

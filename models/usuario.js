@@ -21,12 +21,18 @@ const UsuarioSchema = Schema({
     role:{
         type: String,
         required: true,
-        default: 'USER-ROLE'
+        default: 'USER_ROLE'
     },
     google:{
-        type: String,
+        type: Boolean,
         default: false
     },
+    companiaID:{
+        type:Schema.Types.ObjectId,
+        ref:'Comapania',
+        required:true
+       
+    }
 });
 
 UsuarioSchema.method('toJSON', function(){

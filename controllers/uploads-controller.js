@@ -1,5 +1,6 @@
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
+
 const { response} = require('express'); 
 const { v4 : uuidv4 } = require( 'uuid');
 
@@ -29,7 +30,7 @@ const fileUpload = (req, res=response )=>{
         });
     };
 
-    // Procesar la imagen...
+   // Procesar la imagen...
     const file = req.files.imagen;
    
     const nombreCortado = file.name.split('.'); // juan-2.1.4.jpg
@@ -73,8 +74,10 @@ const fileUpload = (req, res=response )=>{
 
 }
 const retornaImag = (req, res=response) =>{
+
   const { tipo, foto } = req.params;
-  const pathImg = path.join( __dirname,`../uploads/${tipo}/${foto}`); 
+
+  const pathImg = path.join( __dirname,`../uploads/${ tipo }/${ foto }`); 
  
   // Imagen por defecto
   if(fs.existsSync(pathImg)){

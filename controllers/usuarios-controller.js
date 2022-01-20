@@ -37,7 +37,8 @@ const crearUsuario = async(req, res=response)=>{
         if(existeEmail){
             return res.status(400).json({
                 ok:false,
-                msg:'El correo ya está registrado'
+                msg:`${email}, Este correo ya está registrado`,
+        
             });
         }   
         const usuario = new Usuario( req.body);
@@ -50,7 +51,7 @@ const crearUsuario = async(req, res=response)=>{
         await usuario.save();
 
         // Generar el Token - JWT
-        const token = await generarJWT(usuario.id, usuario.email);
+        const token = await generarJWT(usuario.id, usuario.email, usuario.companiaID);
     
         res.json({
             ok:true,
@@ -97,8 +98,17 @@ const actualizarUsuario = async(req, res=response )=>{
                 })
             }
         }
-        campos.email = email;
-        
+
+        if( !usuarioDB.google ){
+            campos.email = email;
+        }else if( usuarioDB.email !== email ){
+            return res.status(400).json({
+                ok:false,
+                msg:'Usuarios de google no pueden cambiar su correo'
+            });
+
+        }
+
         const usuarioActualizado = await Usuario.findByIdAndUpdate(uid, campos, {new:true})
 
         res.json({

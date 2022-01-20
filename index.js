@@ -30,6 +30,7 @@ app.use('/api/todo', require('./routes/busquedas-routes'));
 app.use('/api/uploads', require('./routes/uploads-routes'));
 app.use('/api/login', require('./routes/auth-routes'));
 app.use('/api/login/google', require('./routes/auth-routes'));
+app.use('/api/cias', require('./routes/cia-routes'));
 
 
 
