@@ -1,38 +1,39 @@
+
 const {response} = require('express');
-const Asignacion = require('../models/asignacion');
+const Deduccion = require('../models/deduccion');
 
 
-const getAsignaciones = async(req, res=response )=>{
+const getDeducciones = async(req, res=response )=>{
 
-    const asignacionDB = await Asignacion.find({})
+    const deduccionDB = await Deduccion.find({})
                                          .populate('empleado', 'name1 apell1 identificacion salario')
                                          .populate('usuario', 'name')
-                                    
+                                         
     res.json({
         ok: true,
-        asignaciones: asignacionDB
+        deducciones: deduccionDB
     })
-
+ 
 }
-const getAsignacionesById = async(req, res= response)=>{
+const getDeduccionesById = async(req, res= response)=>{
 
     const id = req.params.id;
 
-    const asignacionDB = await Asignacion.findById(id) 
+    const deduccionDB = await Deduccion.findById(id) 
                                       .populate('empleado','name1 apell1 salario')
                                       .populate('usuario','name img email');
     try {
         
-        if(!asignacionDB){
+        if(!deduccionDB){
             return res.json({
                 ok:false,
-                msg:'Asignación no existe con este ID'
+                msg:'Deducción no existe con este ID'
             })
         }
     
         res.json({
             ok:true,
-            asignacion: asignacionDB
+            deduccion: deduccionDB
         })
     } catch (error) {
         console.log(error);
@@ -44,58 +45,58 @@ const getAsignacionesById = async(req, res= response)=>{
     
 }
 
-const crearAsignacion = async(req, res=response )=>{
+const crearDeduccion = async(req, res=response )=>{
 
     const uid = req.uid;
-    const asignacion = new Asignacion({
+    const deduccion = new Deduccion({
         usuario: uid,
         ...req.body
     })
-
+ 
     try {
-        const asignacionDB = await asignacion.save();
+        const deduccionDB = await deduccion.save();
 
         res.status(200).json({
             ok:true,
-            asignación: asignacionDB
+            deduccion: deduccionDB
         })
         
     } catch (error) {
         console.log(error);
         res.status(500).json({
             ok:false,
-            msg:'Error Registro no gravado'
+            msg:'Error, Registro no gravado'
         })
         
     }
 
 }
 
-const actualizarAsignacion = async(req, res=response)=>{
+const actualizarDeduccion = async(req, res=response)=>{
     const id = req.params.id;
     const uid = req.uid;
 
     try {
         
-        const asignacion = await Asignacion.findById(id);
+        const deduccion = await Deduccion.findById(id);
 
-        if(!asignacion){
+        if(!deduccion){
             return res.status(404).json({
                 ok:false,
-                msg:'Asignacion no encontrada por Id'
+                msg:'Deduccion no encontrada por Id'
             });
         };
 
         // Actualizar empleados
-        const cambiosAsignacion = {
+        const cambiosDeduccion = {
             ...req.body,
             usuario:uid
         };
 
-        asignacionActualizada = await Asignacion.findByIdAndUpdate( id, cambiosAsignacion, {new:true} );
+        deduccionActualizada = await Deduccion.findByIdAndUpdate( id, cambiosDeduccion, {new:true} );
         res.json({
             ok:true,
-            Asignación: asignacionActualizada
+            deducción: deduccionActualizada
         })
     } catch (error) {
         console.log(error);
@@ -105,25 +106,25 @@ const actualizarAsignacion = async(req, res=response)=>{
         })
     }
 }
-const borrarAsignacion = async(req, res= response)=>{
+const borrarDeduccion = async(req, res= response)=>{
 
     const id = req.params.id;
 
     try {
         
-        const asignacion = await Asignacion.findById(id);
+        const deduccion = await Deduccion.findById(id);
 
-        if(!asignacion){
+        if(!deduccion){
             return res.status(404).json({
                 ok:false,
-                msg:'Asignación no encontrada por Id'
+                msg:'Deducción no encontrada por Id'
             });
         };
-        await Asignacion.findByIdAndDelete(id);
+        await Deduccion.findByIdAndDelete(id);
 
         res.json({
             ok:true,
-            msg: 'Asignación Eliminada'
+            msg: 'Deducción Eliminada'
         })
     } catch (error) {
         console.log(error);
@@ -135,9 +136,9 @@ const borrarAsignacion = async(req, res= response)=>{
 }
 
 module.exports = {
-    getAsignaciones,
-    getAsignacionesById,
-    crearAsignacion,
-    actualizarAsignacion,
-    borrarAsignacion
+    getDeducciones,
+    getDeduccionesById,
+    crearDeduccion,
+    actualizarDeduccion,
+    borrarDeduccion
 }

@@ -38,11 +38,17 @@ const EmpleadoSchema = Schema({
         type: String
     },
     usuario:{
-        required: true,
         type: Schema.Types.ObjectId,
+        required: true,
         ref:'Usuario'
+    },
+    companiaID:{
+        type:Schema.Types.ObjectId,
+        required:true,
+        ref:'Compania'
+       
     }
-
+ 
 }, {collection: 'empleados'} );
 
 EmpleadoSchema.method('toJSON', function(){

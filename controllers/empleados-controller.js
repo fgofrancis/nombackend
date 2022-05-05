@@ -4,16 +4,49 @@ const Empleado = require('../models/empleado');
 
 const getEmpleados = async(req, res= response)=>{
 
-    const empleadoDB = await Empleado.find({}) 
+    const empleadoDB = await Empleado.find() 
+                                      .populate('usuario','name img email')
+                                      .populate('companiaID','name img email');
     res.json({
         ok:true,
         empleado: empleadoDB
     })
     
 }
+const getEmpleadosById = async(req, res= response)=>{
+
+    const id = req.params.id;
+
+    const empleadoDB = await Empleado.findById(id) 
+                                      .populate('usuario','name img email')
+                                      .populate('companiaID','name img email');
+    try {
+        
+        if(!empleadoDB){
+            return res.json({
+                ok:false,
+                msg:'Empleado no existe con este ID'
+            })
+        }
+    
+        res.json({
+            ok:true,
+            empleado: empleadoDB
+        })
+    } catch (error) {
+        console.log(error);
+        res.json({
+            ok:false,
+            msg: 'Error, hable con el administrador'
+        })
+    }
+    
+}
+
 const crearEmpleado = async(req, res= response)=>{
 
     const uid = req.uid;
+
     // const empleado = new Empleado(req.body);
     const empleado = new Empleado({
         usuario: uid,
@@ -77,7 +110,7 @@ const actualizarEmpleado = async(req, res= response)=>{
 const borrarEmpleado = async(req, res= response)=>{
 
     const id = req.params.id;
-
+    
     try {
         
         const empleado = await Empleado.findById(id);
@@ -90,7 +123,7 @@ const borrarEmpleado = async(req, res= response)=>{
         };
         await Empleado.findByIdAndDelete(id);
 
-        res.json({
+        return res.json({
             ok:true,
             msg: 'Empleado Eliminado'
         })
@@ -107,5 +140,6 @@ module.exports ={
     getEmpleados,
     crearEmpleado,
     actualizarEmpleado,
-    borrarEmpleado
+    borrarEmpleado,
+    getEmpleadosById
 }

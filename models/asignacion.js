@@ -8,38 +8,41 @@ const asignacionSchema = Schema({
         type:Schema.Types.ObjectId,
         ref:'Empleado'
     },
-    salario:{
-        type:Number,
-        requere:true
+    salarioCotizableTSS:{
+        salario:{
+            type:Number,
+            requere:true
+        },
+        comisiones:{
+            type:Number,
+        },
+        vacaciones:{
+            type:Number,
+        }
     },
-
-    comisiones:{
-        type:Number,
+    otrasRemuneraciones:{
+        horasExtraDiasFeriados:{
+            type:Number
+        },
+        otrosIngresos:{
+            type:Number
+        },
+        bonosTrimestrales:{
+            type:Number
+        }
     },
-
-    vacaciones:{
-        type:Number,
+    ingresosExentoISR:{
+        regaliaPascual:{
+            type:Number
+        }, 
+        indemnizacionesLaborales:{
+            type:Number
+        }, 
+        preavisoYCesantia:{
+            type:Number
+        },
     },
-
-    horasExtraDiasFeriados:{
-        type:Number
-    },
-    otrosIngresos:{
-        type:Number
-    },
-    bonosTrimestrales:{
-        type:Number
-    },
-    RegaliaPascual:{
-        type:Number
-    }, 
-    IndemnizacionesLaborales:{
-        type:Number
-    }, 
-    PreavisoYCesantia:{
-        type:Number
-    },
-    Reembolsos:{
+    reembolsos:{
         type:Number
     },
     usuario:{
@@ -47,6 +50,11 @@ const asignacionSchema = Schema({
         type:Schema.Types.ObjectId,
         ref:'Usuario'
     },
+    fechaRegistro:{
+        type: Date,
+        default:Date.now()
+    }
 
-}, {collection: 'Asignaciones'} )
+}, {collection: 'asignacion'} )
 module.exports = model('Asignacion',asignacionSchema)
+

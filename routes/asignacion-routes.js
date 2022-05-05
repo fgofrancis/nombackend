@@ -8,17 +8,18 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 
 const { 
     getAsignaciones,
+    getAsignacionesById,
     crearAsignacion,
     actualizarAsignacion,
     borrarAsignacion
 
 } = require('../controllers/asignaciones-controller');
 
-const route = Router();
+const router = Router();
 
-route.get('/', getAsignaciones);
+router.get('/', getAsignaciones);
 
-route.post('/',
+router.post('/',
     [
         validarJWT,
         check('empleado','El id del Empleado debe ser válido').isMongoId(),
@@ -26,13 +27,17 @@ route.post('/',
     ],
      crearAsignacion);
      
-route.put('/:id', 
+router.put('/:id', 
     [
         validarJWT
     ],
     actualizarAsignacion);
 
-route.delete('/:id',borrarAsignacion);
+router.delete('/:id',borrarAsignacion);
+
+router.get('/:id',
+    validarJWT,
+    getAsignacionesById);
 
 
-module.exports = route;
+module.exports = router;

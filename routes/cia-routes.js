@@ -1,6 +1,6 @@
 
 /*
-Ruta: '/api/cia'
+Ruta: '/api/cias'
 */
 const { Router } = require('express');
 const { check } = require('express-validator');
@@ -30,10 +30,10 @@ router.put('/:id',
     [
         validarJWT,
         check('name','El name es obligatorio').not().isEmpty(),    
-        check('rnc','El rnc es obligatorio').not().isEmpty(),   
-        validarCampos    
+        check('rnc','El rnc es obligatorio').not().isEmpty(),    
+        validarCampos  
     ],
-        actualizarCompania
+    actualizarCompania
 );
 
 router.delete('/:id',

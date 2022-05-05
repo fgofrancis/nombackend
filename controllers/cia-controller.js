@@ -13,9 +13,9 @@ const getCompania = async(req, res)=>{
     // const total = await Usuario.count();
 
     const [companias, total] = await Promise.all([
-        Compania.find({}, 'name rnc address img')
-               .skip(desde)
-               .limit( 5),
+        Compania.find({}, 'name rnc telefono email fechaRegistro img'),
+            //    .skip(desde)
+            //    .limit( 5),
 
         Compania.countDocuments()         
     ]);
@@ -44,7 +44,7 @@ const crearCompania = async(req, res=response)=>{
 
         // Guardar compania
         await compania.save();
-
+    
         res.json({
             ok:true,
             compania
@@ -65,11 +65,11 @@ const actualizarCompania = async(req, res=response )=>{
 
     // TODO: Validar token y comprobar si es el usuario correcto
     const ciaID = req.params.id;
- 
+    console.log('ciaID..: ', ciaID);
     try {
 
         const companiaDB = await Compania.findById(ciaID);
-
+       
         if( !companiaDB){
             return res.status(500).json({
                 ok:false,
@@ -78,10 +78,10 @@ const actualizarCompania = async(req, res=response )=>{
         }
 
         // Actualizaciones
-        const { name, rnc, ...campos } = req.body;
+        const { rnc, ...campos } = req.body;
 
         if(companiaDB.rnc !== rnc ){
-            const existeRNC = await Usuario.findOne({ rnc })
+            const existeRNC = await Compania.findOne({ rnc })
             if(existeRNC){
                 return res.status(400).json({
                     ok: false,
@@ -90,8 +90,9 @@ const actualizarCompania = async(req, res=response )=>{
             }
         }
         campos.rnc = rnc;
-        
-        const companiaActualizada = await Compania.findByIdAndUpdate(rnc, campos, {new:true})
+        // console.log('campos..: ', campos);
+
+        const companiaActualizada = await Compania.findByIdAndUpdate(ciaID, campos, {new:true})
 
         res.json({
             ok: true,
@@ -115,7 +116,7 @@ const borrarCompania = async(req, res=response)=>{
         const companiaDB = await Compania.findById(ciaID);
 
         if( !companiaDB){
-            return res.status(500).json({
+            return res.status(404).json({
                 ok:false,
                 msg:'No existe compañía con ese ID'
             });
@@ -124,14 +125,14 @@ const borrarCompania = async(req, res=response)=>{
         // Eliminar usuario
         await Compania.findByIdAndDelete(ciaID);
 
-         res.status(300).json({
+         return res.status(200).json({
              ok: true,
              msg:'Registro Borrado exitosamente'
          })
         
     } catch (error) {
         console.log(error);
-        res.status(500).json({
+        return res.status(500).json({
             ok:false,
             msg:'Error inesperado al borrar registro.... revisar log'
         })

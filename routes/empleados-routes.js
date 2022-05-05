@@ -9,7 +9,8 @@ const { validarJWT } = require('../middlewares/validar-jwt');
 const { getEmpleados,
         crearEmpleado,
         actualizarEmpleado,
-        borrarEmpleado } = require('../controllers/empleados-controller');
+        borrarEmpleado, 
+        getEmpleadosById} = require('../controllers/empleados-controller');
 
 
 
@@ -41,7 +42,11 @@ router.delete('/:id',
     validarJWT,
     borrarEmpleado);
 
+router.get('/:id',
+    validarJWT,
+    getEmpleadosById);
 
 
+ 
 
 module.exports = router

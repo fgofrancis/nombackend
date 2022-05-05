@@ -3,6 +3,7 @@ const Usuario = require('../models/usuario');
 const passcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 
+// http://localhost:3000/api/usuarios?desde=5
 const getUsuarios = async(req, res)=>{
 
     const desde = Number(req.query.desde) || 0;
@@ -13,13 +14,13 @@ const getUsuarios = async(req, res)=>{
     // const total = await Usuario.count();
 
     const [usuarios, total] = await Promise.all([
-        Usuario.find({}, 'name email role google img')
+        Usuario.find().populate('companiaID', 'name')
                .skip(desde)
                .limit( 5),
 
         Usuario.countDocuments()         
     ]);
- 
+
     res.json({
         ok:true,
         usuarios,
@@ -142,7 +143,7 @@ const borrarUsuario = async(req, res=response)=>{
         // Eliminar usuario
         await Usuario.findByIdAndDelete(uid);
 
-         res.status(300).json({
+         res.status(200).json({
              ok: true,
              msg:'Registro Borrado exitosamente'
          })

@@ -3,7 +3,8 @@ const { response } = require('express');
 const Usuario = require('../models/usuario');
 const Empleado = require('../models/empleado');
 const Escala = require('../models/escalaSalarial');
-
+const Compania = require('../models/compania');
+ 
 const buscar = async(req, res= response )=>{
 
     const query = req.params.busqueda;
@@ -47,22 +48,28 @@ const buscarDocumentoColeccion = async(req, res= response )=>{
     let data = [];
     switch (tabla) {
         case 'usuarios':
-            data = await Usuario.find({name:regex});
+            data = await Usuario.find({name:regex})
+                                .populate('companiaID','name rnc');
             break;
     
         case 'empleados':
             data = await Empleado.find({name1:regex})
-                                .populate('usuario','name email');
+                                 .populate('usuario','name email')
+                                 .populate('companiaID','name rnc');
             break;
     
         case 'escalas':
              data = await Escala.find({year:regex});
              break;
+
+        case 'companias':
+             data = await Compania.find({name:regex});
+             break;
     
         default:
            return res.status(400).json({
                 ok:false,
-                msg: 'La tabla tiene que ser: usuarios/empleados/escalas'
+                msg: 'La tabla tiene que ser: usuarios/empleados/escalas/companias'
             });
     }
     res.json({

@@ -10,14 +10,26 @@ const companiaSchema = Schema({
     rnc:{
         type: String,
     },
+    telefono:{
+        type: String,
+    },
 
-    address:{
+    email:{
         type: String
     },
     img:{
         type: String
+    },
+    fechaRegistro:{
+        type: Date,
+        default:Date.now()
     }
  
-}, {collection: 'compania'} )
+}, { collection: 'companias' } );
+
+companiaSchema.method('toJSON', function(){
+    const {__v, ...object } = this.toObject();
+    return object;
+})
 
 module.exports = model( 'Compania',companiaSchema )

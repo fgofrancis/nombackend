@@ -29,7 +29,7 @@ const UsuarioSchema = Schema({
     },
     companiaID:{
         type:Schema.Types.ObjectId,
-        ref:'Comapania',
+        ref:'Compania',
         required:true
        
     }
