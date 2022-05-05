@@ -1,5 +1,7 @@
 
 require('dotenv').config();
+const path = require('path');
+
 const express = require('express');
 const cors = require('cors');
 
@@ -36,6 +38,10 @@ app.use('/api/escalas', require('./routes/escala-routes'));
 app.use('/api/renglones', require('./routes/renglones-routes'));
 app.use('/api/parametros', require('./routes/parametros-routes'));
 
+// Lo ultimo
+app.get('*', (req, res)=>{
+    res.sendFile( path.resolve(__dirname, 'public/index.html'))
+})
 
 
 app.listen( process.env.PORT, ()=>{
