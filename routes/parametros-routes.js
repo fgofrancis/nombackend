@@ -24,9 +24,13 @@ router.get('/', validarJWT, getParametro);
 router.post('/',
     [
         validarJWT,
-        check('smp','El Salario mínimo promedio es obligatorio').not().isEmpty(),    
-        check('sfs','El Seguro familiar de salud es obligatorio').not().isEmpty(),    
-        check('svds','El Seguro de vida dicapacidad y sobrevivencia es obligatorio').not().isEmpty(),      
+        check('salarioMinPromedio','El Salario mínimo promedio es obligatorio').not().isEmpty(),    
+        check('seguroFamiliarSalud.tasaEmpleado','El Seguro familiar de salud tasa empleado es obligatorio').not().isEmpty(),    
+        check('seguroFamiliarSalud.tasaPatron','El Seguro familiar de salud tasa patrón es obligatorio').not().isEmpty(),    
+        check('seguroVejezDiscapSobrevivencia.tasaEmpleado','El Seguro de vejez dicapacidad y sobrevivencia tasa empleado es obligatorio').not().isEmpty(),      
+        check('seguroVejezDiscapSobrevivencia.tasaPatron','El Seguro de vejez dicapacidad y sobrevivencia tasa patrón es obligatorio').not().isEmpty(),      
+        check('seguroRiesgoLaboral','El Seguro riesgo laboral es obligatorio').not().isEmpty(),      
+        check('salarioMinTSS','El Salario mínimo TSS es obligatorio').not().isEmpty(),      
         validarCampos   
     ],
     crearParametro
@@ -34,11 +38,8 @@ router.post('/',
 
 router.put('/:id',
     [
-        validarJWT,
-        check('smp','El Salario mínimo promedio es obligatorio').not().isEmpty(),    
-        check('sfs','El Seguro familiar de salud es obligatorio').not().isEmpty(),    
-        check('svds','El Seguro de vida dicapacidad y sobrevivencia es obligatorio').not().isEmpty(),    
-        validarCampos  
+        validarJWT
+        
     ],
     actualizarParametro
 );

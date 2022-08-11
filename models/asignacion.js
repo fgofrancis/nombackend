@@ -1,17 +1,17 @@
 const { type } = require('express/lib/response');
 const {Schema, model} = require('mongoose');
-
+ 
 const asignacionSchema = Schema({
 
     empleado:{
-        require:true,
+        required:true,
         type:Schema.Types.ObjectId,
         ref:'Empleado'
     },
     salarioCotizableTSS:{
         salario:{
             type:Number,
-            requere:true
+            requered:true
         },
         comisiones:{
             type:Number,

@@ -4,31 +4,17 @@ const { body } = require('express-validator');
 const Parametro = require('../models/parametro');
 
 
-const getParametro = async(req, res)=>{
+const getParametro = async(req, res=response)=>{
 
-    const desde = Number(req.query.desde) || 0;
+    const parametroDB = await Parametro.find({})
+                                        .populate('usuario', 'name')
 
-    // const usuarios = await Usuario.find({}, 'name email role google')
-    //                               .skip(desde)
-    //                               .limit( 5);
-    // const total = await Usuario.count();
-
-    const [parametros, total] = await Promise.all([
-        Parametro.find({}, 'smp sfs svds'),
-            //    .skip(desde)
-            //    .limit( 5),
-
-            Parametro.countDocuments()         
-    ]);
- 
     res.json({
-        ok:true,
-        parametros,
-        total
-        // uid:req.uid, esto es para demostrar como capturar el usuario logeado
-        // correo:req.address
+        ok: true,
+        parametros: parametroDB
     })
 }
+
 const getParametroById = async(req, res= response)=>{
 
     const id = req.params.id;
@@ -60,18 +46,21 @@ const getParametroById = async(req, res= response)=>{
 
 const crearParametro = async(req, res=response)=>{
     // const { year } = req.body;
+    const uid = req.uid;
+
+    // const parametro = new Parametro( req.body);
+    const parametro = new Parametro({
+        usuario:uid,
+        ...req.body
+    })
 
     try {
-       
-        const parametro = new Parametro( req.body);
-
-        // Guardar Renglon
-        await parametro.save();
-    
-        res.json({
-            ok:true,
-            parametro
-        });
+           // Guardar Renglon
+           const parametroDB = await parametro.save();
+           res.json({
+               ok:true,
+               parametro:parametroDB
+            });
 
     } catch (error) {
         console.log(error);
@@ -88,6 +77,7 @@ const actualizarParametro = async(req, res=response )=>{
 
     // TODO: Validar token y comprobar si es el usuario correcto
     const id = req.params.id;
+    const uid = req.uid;
 
     try {
 
@@ -98,14 +88,17 @@ const actualizarParametro = async(req, res=response )=>{
                 ok:false,
                 msg:'No existe Renglón con ese ID'
             });
-        }
+        };
  
         /* Actualizaciones, con la instrucion de abajo podriamos extraer algun
             campo del body, pero ahora no lo aplicamos.const {camp1 ,...campos } = req.body;
         */
-        const { ...campos } = req.body;
+        const cambiosParametro = { 
+            ...req.body,
+            usuario:uid
+        };
 
-        const parametroActualizada = await Parametro.findByIdAndUpdate(id, campos, {new:true})
+        const parametroActualizada = await Parametro.findByIdAndUpdate(id, cambiosParametro, {new:true})
 
         res.json({
             ok: true,

@@ -7,6 +7,7 @@ const { googleVerify } = require('../helpers/google-verify');
 const login = async(req, res=response) =>{
 
     const { email, password }= req.body;
+    
     try {
         // Verificar email
         const usuarioDB = await Usuario.findOne( {email} );

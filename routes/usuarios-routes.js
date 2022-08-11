@@ -24,7 +24,7 @@ router.post('/',
     validarCampos   
 ],crearUsuario
 );
-
+ 
 router.put('/:id',
         [
             validarJWT,

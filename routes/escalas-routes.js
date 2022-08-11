@@ -10,7 +10,8 @@ const {
         crearEscala,
         actualizarEscala,
         borrarEscala,
-        getEscalaById
+        getEscalaById,
+        agregarEscala
       } = require('../controllers/escalas-controller');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
@@ -26,15 +27,15 @@ router.post('/',
         validarCampos   
     ],crearEscala
 );
-
-router.put('/:id',
-    [
-        validarJWT,
-        check('year','El año es obligatorio').not().isEmpty(),    
-        validarCampos  
-    ],
-    actualizarEscala
-);
+// Esto es mientras 
+// router.put('/:id',
+//     [
+//         validarJWT,
+//         check('year','El año es obligatorio').not().isEmpty(),    
+//         validarCampos  
+//     ],
+//     actualizarEscala
+// );
 
 router.delete('/:id',
     validarJWT, 
@@ -43,6 +44,11 @@ router.delete('/:id',
 router.get('/:id',
     validarJWT,
     getEscalaById);
+
+
+router.post('/:id/add-escala',
+        agregarEscala
+);
 
 module.exports = router;
 

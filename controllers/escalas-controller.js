@@ -1,6 +1,7 @@
 
 
 const { response } = require('express');
+const { send } = require('express/lib/response');
 const Escala = require('../models/escalaSalarial');
 
 
@@ -170,12 +171,38 @@ const borrarEscala = async(req, res=response)=>{
     }
 
 }
+const agregarEscala = (req, res=response)=>{
+    const id = req.params.id
+    const escala = req.body;
+    // const idBody = req.body.id;
+    // const escala = JSON.parse(req.body.escala);
+    console.log('id Params....', id);
+    console.log('body....', req.body);
+    // console.log('Escala capturada....', escala);
+
+    // escalas.forEach(item =>{
+    //     Escala.updateOne({id:item.id},{
+    //         $push:{
+    //             'escalas':{
+    //                 escala:item.escala
+
+    //             }
+    //         }
+    //     })
+    // })       
+    return res.json({
+        msg:'Estamos agregando escala....',
+        body: escala,
+        id,
+    })
+}
 
 module.exports = {
     getEscala,
     crearEscala,
     actualizarEscala,
     borrarEscala,
-    getEscalaById
+    getEscalaById,
+    agregarEscala
 }
 

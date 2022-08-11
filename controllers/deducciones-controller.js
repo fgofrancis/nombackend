@@ -5,6 +5,8 @@ const Deduccion = require('../models/deduccion');
 
 const getDeducciones = async(req, res=response )=>{
 
+    console.log('**** hola *****');
+    
     const deduccionDB = await Deduccion.find({})
                                          .populate('empleado', 'name1 apell1 identificacion salario')
                                          .populate('usuario', 'name')
@@ -15,10 +17,11 @@ const getDeducciones = async(req, res=response )=>{
     })
  
 }
+
 const getDeduccionesById = async(req, res= response)=>{
 
     const id = req.params.id;
-
+ 
     const deduccionDB = await Deduccion.findById(id) 
                                       .populate('empleado','name1 apell1 salario')
                                       .populate('usuario','name img email');

@@ -17,6 +17,9 @@ const getEmpleadosById = async(req, res= response)=>{
 
     const id = req.params.id;
 
+    // const empleadoDB1 = await Empleado.aggregate
+    // db.articles.aggregate([ { $match : { name : "dave" } } ]);
+
     const empleadoDB = await Empleado.findById(id) 
                                       .populate('usuario','name img email')
                                       .populate('companiaID','name img email');
@@ -55,11 +58,10 @@ const crearEmpleado = async(req, res= response)=>{
 
     try {
             const empleadoDB = await empleado.save();
-
             res.json({
-            ok:true,
-            empleado:empleadoDB
-        });
+                ok:true,
+                empleado:empleadoDB
+            });
 
     } catch (error) {
         console.log(error);
@@ -108,7 +110,7 @@ const actualizarEmpleado = async(req, res= response)=>{
     
 }
 const borrarEmpleado = async(req, res= response)=>{
-
+ 
     const id = req.params.id;
     
     try {

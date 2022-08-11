@@ -2,7 +2,7 @@ const { type } = require('express/lib/response');
 const {Schema, model} = require('mongoose');
 
 const deduccionSchema = Schema({
-
+ 
     empleado:{
         require:true,
         type:Schema.Types.ObjectId,
@@ -43,3 +43,4 @@ const deduccionSchema = Schema({
 }, {collection: 'deduccion'} )
 module.exports = model('Deduccion',deduccionSchema)
 
+ 

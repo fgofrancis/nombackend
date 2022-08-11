@@ -34,9 +34,13 @@ app.use('/api/uploads', require('./routes/uploads-routes'));
 app.use('/api/login', require('./routes/auth-routes'));
 app.use('/api/login/google', require('./routes/auth-routes'));
 app.use('/api/cias', require('./routes/cia-routes'));
-app.use('/api/escalas', require('./routes/escala-routes'));
+app.use('/api/escalas', require('./routes/escalas-routes'));
+// app.use('/api/escalas/registral', require('./routes/escalas-routes'));
+
 app.use('/api/renglones', require('./routes/renglones-routes'));
 app.use('/api/parametros', require('./routes/parametros-routes'));
+app.use('/api/empdedasig',require('./routes/empdedasig-routes')) 
+app.use('/api/nominaProcess',require('./routes/nominaProcess-routes'))
 
 // Lo ultimo
 app.get('*', (req, res)=>{
